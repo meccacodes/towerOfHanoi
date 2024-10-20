@@ -19,4 +19,15 @@
 .tower {
   background-color: #4df321;
   width: 200px;
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.transparent {
+  background-color: transparent;
 }
