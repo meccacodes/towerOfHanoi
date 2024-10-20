@@ -31,3 +31,23 @@
 .transparent {
   background-color: transparent;
 }
+
+.five {
+  width: 90%;
+}
+
+.four {
+  width: 70%;
+}
+
+.three {
+  width: 50%;
+}
+
+.two {
+  width: 30%;
+}
+
+.one {
+  width: 10%;
+}
