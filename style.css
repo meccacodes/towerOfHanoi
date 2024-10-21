@@ -10,16 +10,16 @@
 }
 
 .disk {
-  height: 50px;
+  height: 35px;
   width: 100px;
-  background-color: #333;
-  margin-bottom: 10px;
+  border-radius: 25px;
+  border: 1px solid white;
 }
 
 .tower {
-  background-color: #4df321;
+  background-color: #333;
   width: 200px;
-  padding-top: 10px;
+  height: 70vh;
   display: flex;
   flex-direction: column;
   align-content: center;
@@ -34,20 +34,29 @@
 
 .five {
   width: 90%;
+  background-color: blue;
 }
 
 .four {
   width: 70%;
+  background-color: green;
 }
 
 .three {
   width: 50%;
+  background-color: yellow;
 }
 
 .two {
   width: 30%;
+  background-color: orange;
 }
 
 .one {
   width: 10%;
+  background-color: red;
+}
+
+.diskNumber {
+  text-align: center;
 }
