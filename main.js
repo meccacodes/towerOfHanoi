@@ -1,4 +1,5 @@
-// A board representing 3 pegs, and 5 discs on the first peg in ascending order.  This is a normal starting position for the game.
+// A board representing 3 towers, and 5 discs on the first tower in ascending order.
+
 let startingBoard = [[5, 4, 3, 2, 1], [], []];
 
 let boardState = {
@@ -14,8 +15,34 @@ const displayBoard = function () {
 
 displayBoard();
 
+// map tower1 array into disks
+document.addEventListener("DOMContentLoaded", () => {
+  const disks = [
+    document.querySelector(".disk-1"),
+    document.querySelector(".disk-2"),
+    document.querySelector(".disk-3"),
+    document.querySelector(".disk-4"),
+    document.querySelector(".disk-5"),
+  ];
+
+  // Reverse the order of the disks array
+  const reversedDisks = disks.reverse();
+
+  reversedDisks.forEach((disk, index) => {
+    if (disk) {
+      const diskValue = boardState.tower1[index];
+      if (diskValue) {
+        disk.innerHTML = `<span class="disk${diskValue}">${diskValue}</span>`;
+      } else {
+        disk.innerHTML = "";
+      }
+    }
+  });
+
+  // Rest of your code...
+});
+
 // player submits a move
-prompt(": ");
 // move is the peg number to move from, and the peg number to move to
 
 let moveDisc = function (peg1, peg2) {

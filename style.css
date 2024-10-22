@@ -10,7 +10,7 @@
 }
 
 .disk {
-  height: 35px;
+  height: 20px;
   width: 100px;
   border-radius: 25px;
   border: 1px solid white;
@@ -32,31 +32,27 @@
   background-color: transparent;
 }
 
-.five {
+.disk-5 {
   width: 90%;
   background-color: blue;
 }
 
-.four {
+.disk-4 {
   width: 70%;
   background-color: green;
 }
 
-.three {
+.disk-3 {
   width: 50%;
   background-color: yellow;
 }
 
-.two {
+.disk-2 {
   width: 30%;
   background-color: orange;
 }
 
-.one {
+.disk-1 {
   width: 10%;
   background-color: red;
-}
-
-.diskNumber {
-  text-align: center;
 }
