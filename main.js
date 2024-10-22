@@ -8,14 +8,7 @@ let boardState = {
   tower3: [],
 };
 
-// display the board
-const displayBoard = function () {
-  console.log("Board State:", boardState);
-};
-
-displayBoard();
-
-// map tower1 array into disks
+// add tower1 array values onto disks
 document.addEventListener("DOMContentLoaded", () => {
   const disks = [
     document.querySelector(".disk-1"),
@@ -32,48 +25,90 @@ document.addEventListener("DOMContentLoaded", () => {
     if (disk) {
       const diskValue = boardState.tower1[index];
       if (diskValue) {
-        disk.innerHTML = `<span class="disk${diskValue}">${diskValue}</span>`;
+        disk.innerHTML = `<span class="diskSpan disk${diskValue}">${diskValue}</span>`;
       } else {
         disk.innerHTML = "";
       }
     }
   });
-
-  // Rest of your code...
 });
 
 // player submits a move
-// move is the peg number to move from, and the peg number to move to
 
-let moveDisc = function (peg1, peg2) {
-  console.log(`Move disc from peg ${peg1} to peg ${peg2}`);
-  // check if move is valid:
-  // 1. check if disc can be moved (must be on top)
-  // 2. check if placing on top of a smaller disc
+const submitButton = document.querySelector("#moveButton");
+
+// listen for submit button
+submitButton.addEventListener("click", function (event) {
+  event.preventDefault();
+  // get the tower numbers from the inputs
+  let fromTower = document.querySelector(".fromTower").value;
+  console.log(fromTower);
+  let toTower = document.querySelector(".toTower").value;
+  console.log(toTower);
+});
+
+// check if move is valid:
+// 1. check if disc can be moved (must be on top)
+// 2. check if placing on top of a smaller disc
+// if valid, move disc
+// if not valid, display error message
+let validateMove = function (fromTower, toTower) {};
+
+let moveDisc = function (fromTower, toTower) {
+  console.log(`Move disc from tower ${fromTower} to tower ${toTower}`);
 };
 
-// starting board
-// --- 5 4 3 2 1
-// ---
-// ---
+// //////////////////////////////////////////////////////////////////////////////
+// *** SANDBOX ***
+// submitButton.addEventListener("click", function (event) {
+//   event.preventDefault();
+//   let fromTower = document.querySelector(".fromTower").value;
+//   let toTower = document.querySelector(".toTower").value;
 
-// Move the disc from peg 1 to peg 2
-moveDisc(1, 2);
-// That move was successful, board is now:
-// --- 5 4 3 2
-// --- 1
-// ---
+//   if (validateMove(fromTower, toTower)) {
+//     moveDisc(fromTower, toTower);
+//   } else {
+//     displayErrorMessage();
+//   }
+// });
 
-// Move disc from peg 1 to peg 3
-moveDisc(1, 3);
-// That move was successful, board is now:
-// --- 5 4 3
-// --- 1
-// --- 2
+// let validateMove = function (fromTower, toTower) {
+//   const fromTowerArray = boardState[`tower${fromTower}`];
+//   const toTowerArray = boardState[`tower${toTower}`];
 
-// Move disc from peg 1 to peg 2
-moveDisc(1, 2);
-// You cannot move a larger disc on top of a smaller one, board is still:
-// --- 5 4 3
-// --- 1
-// --- 2
+//   // Check if there's a disc to move
+//   if (fromTowerArray.length === 0) {
+//     return false;
+//   }
+
+//   const discToMove = fromTowerArray[fromTowerArray.length - 1];
+//   const topDiscOnTarget = toTowerArray[toTowerArray.length - 1];
+
+//   // Check if the disc can be placed on the target tower
+//   if (toTowerArray.length === 0 || discToMove < topDiscOnTarget) {
+//     return true;
+//   }
+
+//   return false;
+// };
+
+// let moveDisc = function (fromTower, toTower) {
+//   const fromTowerArray = boardState[`tower${fromTower}`];
+//   const toTowerArray = boardState[`tower${toTower}`];
+
+//   const discToMove = fromTowerArray.pop();
+//   toTowerArray.push(discToMove);
+
+//   updateBoardDisplay();
+//   console.log(`Moved disc ${discToMove} from tower ${fromTower} to tower ${toTower}`);
+// };
+
+// let displayErrorMessage = function () {
+//   console.log("Invalid move. Please try again.");
+//   // You can replace this with a more user-friendly way to display the error message
+// };
+
+// let updateBoardDisplay = function () {
+//   // Implement this function to update the visual representation of the board
+//   // based on the current boardState
+// };
