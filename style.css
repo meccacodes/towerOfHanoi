@@ -1,4 +1,11 @@
+h1 {
+  text-align: center;
+}
+
 #game-board {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  overflow: hidden;
   padding: 20px;
   background-color: #f0f0f0;
   display: flex;
@@ -10,51 +17,70 @@
 }
 
 .disk {
-  height: 24px;
-  width: 100px;
+  color: #333;
   border-radius: 25px;
   border: 1px solid white;
+  text-align: center;
+}
+
+.tower-container {
   text-align: center;
 }
 
 .tower {
   background-color: #333;
   width: 200px;
-  height: 70vh;
+  height: 150px;
   display: flex;
   flex-direction: column;
   justify-content: end;
-  flex-wrap: nowrap;
   align-items: center;
   padding-left: 20px;
   padding-right: 20px;
-}
-
-.transparent {
-  background-color: transparent;
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 .disk-5 {
   width: 100%;
-  background-color: blue;
+  background-color: mediumturquoise;
 }
 
 .disk-4 {
   width: 80%;
-  background-color: green;
+  background-color: lightgreen;
 }
 
 .disk-3 {
   width: 60%;
-  background-color: yellow;
+  background-color: lightyellow;
 }
 
 .disk-2 {
   width: 40%;
-  background-color: orange;
+  background-color: lightcoral;
 }
 
 .disk-1 {
   width: 20%;
-  background-color: red;
+  background-color: rosybrown;
+}
+
+.move-container{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+#player-move {
+  display: flex;
+}
+
+.fromTower {
+  margin-right: 10px;
+}
+
+.toTower {
+  margin-left: 10px;
+  margin-right: 10px;
 }
