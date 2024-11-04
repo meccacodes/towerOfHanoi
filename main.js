@@ -25,6 +25,8 @@ let board = {
   tower3: [],
 };
 
+const tower1Array = board[Object.keys(board)[0]]
+
 // add tower1 array values onto disks
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -44,15 +46,18 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 console.log(board);
-
+console.log(tower1Array[tower1Array.length - 1])
 
 
 // check if move is valid:
 const validateMove = function (fromTower, toTower) {
   console.log(`Validating move...`);
   // 1. check if disc can be moved (must be on top)
-  if (board.tower1[4] === 1) {
-    console.log(`${fromTower} is on top, it is disk ${board.tower1[4]}`)
+  // how to check if 
+  const diskOnTop = tower1Array[tower1Array.length - 1];
+  console.log(diskOnTop);
+  if (diskOnTop == fromTower) {
+    console.log(`${fromTower} is on top, it is disk ${diskOnTop}`)
   } else console.log(`${fromTower} is not on top`);
 // 2. check if placing on top of a smaller disc
 // if valid, move disc
