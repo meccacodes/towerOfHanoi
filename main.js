@@ -3,9 +3,9 @@ const fromTower = document.querySelector(".fromTower");
 const toTower = document.querySelector(".toTower");
 const moveButton = document.querySelector(".moveButton");
 
-const tower1 = document.querySelector("#tower1");
-const tower2 = document.querySelector("#tower2");
-const tower3 = document.querySelector("#tower3");
+const tower1 = document.querySelector(".tower1");
+const tower2 = document.querySelector(".tower2");
+const tower3 = document.querySelector(".tower3");
 
 const disks = [
   document.querySelector(".disk-1"),
@@ -17,7 +17,8 @@ const disks = [
 
 // A board representing 3 towers, and 5 discs on the first tower in ascending order.
 
-// let startingBoard = [[5, 4, 3, 2, 1], [], []];
+const startingBoard = [[5, 4, 3, 2, 1], [], []];
+
 
 let board = {
   tower1: [5, 4, 3, 2, 1],
@@ -25,9 +26,14 @@ let board = {
   tower3: [],
 };
 
-const tower1Array = board[Object.keys(board)[0]]
+// getInnerArrays
+const gameInstance = [...startingBoard];
 
-// add tower1 array values onto disks
+console.log(`Starting board instance, this game's instance:`, gameInstance);
+
+const tower1Array = board[Object.keys(board)[0]];
+
+// add tower1 array values onto disk
 document.addEventListener("DOMContentLoaded", () => {
 
   // Reverse the order of the disks array
@@ -45,28 +51,58 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-console.log(board);
-console.log(tower1Array[tower1Array.length - 1])
+// console.log(`starting game board:`, startingBoard);
+// console.log(`Tower 1's last element:`, tower1Array[tower1Array.length - 1])
+// console.log(`The tower 1 array, hardcoded:`, board[Object.keys(board)[0]])
 
 
 // check if move is valid:
 const validateMove = function (fromTower, toTower) {
-  console.log(`Validating move...`);
-  // 1. check if disc can be moved (must be on top)
-  // how to check if 
-  const diskOnTop = tower1Array[tower1Array.length - 1];
-  console.log(diskOnTop);
-  if (diskOnTop == fromTower) {
-    console.log(`${fromTower} is on top, it is disk ${diskOnTop}`)
-  } else console.log(`${fromTower} is not on top`);
+  // Get fromTower array
+  const fromTowerIndex = fromTower - 1;
+  console.log(`The from tower index:`, fromTowerIndex)
+  console.log(`Validating move... the from Tower is ${fromTower} and the toTower is ${toTower}`);
+  const fromTowerArray = gameInstance[fromTowerIndex];
+  console.log(`From tower array:`, fromTowerArray);
+  // Get toTower Array
+  const toTowerIndex = toTower - 1;
+  console.log(`The to Tower index:`, toTowerIndex);
+  const toTowerArray = gameInstance[toTowerIndex];
+  console.log(`The to Tower Array:`, toTowerArray);
+  const fromTowerLength = fromTowerArray.length; 
+  console.log(`from Tower length:`, fromTowerLength);
+  if (fromTowerLength === 0) {
+    console.log(`There are no disks tower ${fromTower}, try again.  Choose a tower with disks.`)
+  } else if (fromTowerIndex == fromTower - 1) {
+    const popDisk = fromTowerArray.pop();
+    console.log(`The moving disk is ${popDisk}`);
+    const addDisk = toTowerArray.unshift(popDisk);
+    console.log(`The board now looks like this:`, gameInstance);
+  }
+
+
+  // if (fromTowerIndex == fromTower - 1 && fromTowerArray.lenght != 0) {
+  //   console.log(true);
+  //   const popDisk = fromTowerArray.pop();
+  //   console.log(`The popped disk:`, popDisk);
+  //   console.log(fromTowerArray);
+  //   const addDisk = toTowerArray.unshift(popDisk);
+  //   console.log(addDisk);
+  //   console.log(`New to Tower Array:`, toTowerArray);
+  // } else {
+  //   console.log(`This tower is empty, try again.  Choose a tower with disks`);
+  // }
 // 2. check if placing on top of a smaller disc
+
 // if valid, move disc
 // if not valid, display error message
 };
 
 // Move top disk from fromTower to toTower in DOM
 const moveDisk = function (fromTower, toTower) {
-  console.log(`Move disc from tower ${fromTower} to tower ${toTower}`);
+  // const fromTowerArray = gameInstance[fromTower];
+  // console.log(`The from Array:`, fromTowerArray);
+  // console.log(`Move disc from tower ${fromTower} to tower ${toTower}`);
   validateMove(fromTower, toTower);
 };
 
