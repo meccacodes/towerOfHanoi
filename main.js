@@ -2,6 +2,11 @@
 const fromTower = document.querySelector(".fromTower");
 const toTower = document.querySelector(".toTower");
 const moveButton = document.querySelector(".moveButton");
+
+const tower1 = document.querySelector("#tower1");
+const tower2 = document.querySelector("#tower2");
+const tower3 = document.querySelector("#tower3");
+
 const disks = [
   document.querySelector(".disk-1"),
   document.querySelector(".disk-2"),
@@ -12,9 +17,9 @@ const disks = [
 
 // A board representing 3 towers, and 5 discs on the first tower in ascending order.
 
-let startingBoard = [[5, 4, 3, 2, 1], [], []];
+// let startingBoard = [[5, 4, 3, 2, 1], [], []];
 
-let boardState = {
+let board = {
   tower1: [5, 4, 3, 2, 1],
   tower2: [],
   tower3: [],
@@ -28,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   reversedDisks.forEach((disk, index) => {
     if (disk) {
-      const diskValue = boardState.tower1[index];
+      const diskValue = board.tower1[index];
       if (diskValue) {
         disk.innerHTML = `<span class="diskSpan disk${diskValue}">${diskValue}</span>`;
       } else {
@@ -38,9 +43,26 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+console.log(board);
+
+
+
+// check if move is valid:
+const validateMove = function (fromTower, toTower) {
+  console.log(`Validating move...`);
+  // 1. check if disc can be moved (must be on top)
+  if (board.tower1[4] === 1) {
+    console.log(`${fromTower} is on top, it is disk ${board.tower1[4]}`)
+  } else console.log(`${fromTower} is not on top`);
+// 2. check if placing on top of a smaller disc
+// if valid, move disc
+// if not valid, display error message
+};
+
 // Move top disk from fromTower to toTower in DOM
 const moveDisk = function (fromTower, toTower) {
   console.log(`Move disc from tower ${fromTower} to tower ${toTower}`);
+  validateMove(fromTower, toTower);
 };
 
 // player submits a move
@@ -60,15 +82,6 @@ submitButton.addEventListener("click", function (event) {
   return (fromTower, toTower)
 });
 
-
-
-
-// check if move is valid:
-// 1. check if disc can be moved (must be on top)
-// 2. check if placing on top of a smaller disc
-// if valid, move disc
-// if not valid, display error message
-let validateMove = function (fromTower, toTower) {};
 
 
 // //////////////////////////////////////////////////////////////////////////////
