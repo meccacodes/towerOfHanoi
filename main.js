@@ -17,7 +17,7 @@ const disks = [
 
 // A board representing 3 towers, and 5 discs on the first tower in ascending order.
 
-const startingBoard = [[5, 4, 3, 2, 1], [5, 4, 3, 2], []];
+const startingBoard = [[5, 4, 3, 2, 1], [], []];
 
 let board = {
   tower1: [5, 4, 3, 2, 1],
@@ -55,29 +55,20 @@ const validateMove = function (fromTower, toTower) {
 
   // Get fromTower array
   const fromTowerIndex = fromTower - 1;
-  console.log(`The from tower index:`, fromTowerIndex);
   let fromTowerArray = gameInstance[fromTowerIndex];
-  console.log(`From tower array:`, fromTowerArray);
-  console.log(`The from tower array is type:`, typeof fromTowerArray);
 
   // Get toTower Array
   const toTowerIndex = toTower - 1;
-  console.log(`The to Tower index:`, toTowerIndex);
   const toTowerArray = gameInstance[toTowerIndex];
-  console.log(`The to Tower Array:`, toTowerArray);
 
   const fromTowerLength = fromTowerArray.length;
-  console.log(`from Tower length:`, fromTowerLength);
   const toTowerLength = toTowerArray.length;
-  console.log(`to Tower length:`, toTowerLength);
 
   // get disk to move
   const diskToMove = fromTowerArray[fromTowerLength - 1];
-  console.log(`The disk to move:`, diskToMove);
 
   // get top disc on target tower
   const topDiscOnTarget = toTowerArray[toTowerLength - 1];
-  console.log(`The top disc on the target tower:`, topDiscOnTarget);
 
   // check if fromTower or toTower is undefined
   if (fromTowerArray === undefined || toTowerArray === undefined) {
@@ -115,17 +106,33 @@ const validateMove = function (fromTower, toTower) {
   }
 };
 
+// helper function to compare gameInstance array with winning array
+const isWinningArray = function (gameInstanceArray, winningArray) {
+  let compareArrays =
+    gameInstanceArray.length === winningArray.length &&
+    gameInstanceArray.every(
+      (element, index) => element === winningArray[index]
+    );
+  if (compareArrays) {
+    console.log(`checkWinner... You've won!`);
+  } else console.log("checkWinner... Not yet!");
+  return compareArrays;
+};
+
 // check if the game is won
 const checkWinner = function () {
+  const winningTower = [5, 4, 3, 2, 1];
   console.log(`Checking for a winner...`);
-  const winningBoard = [[5, 4, 3, 2], [5, 4, 3, 2, 1], []];
-  console.log(gameInstance);
-  console.log(JSON.stringify(winningBoard) == JSON.stringify(gameInstance[1]));
-  // if (gameInstance[1] == winningBoard || gameInstance[2] == winningBoard) {
-  //   console.log(`You won!`);
-  // } else {
-  //   console.log(`Not yet!`);
-  // }
+  console.log(`This game's board:`, gameInstance);
+  console.log(`Tower 2:`, gameInstance[1]);
+  console.log(`Tower 3:`, gameInstance[2]);
+  const checkTower2 = isWinningArray(gameInstance[1], winningTower);
+  const checkTower3 = isWinningArray(gameInstance[2], winningTower);
+  console.log(`Tower 2 check:`, checkTower2);
+  console.log(`Tower 3 check:`, checkTower3);
+  if (checkTower2 || checkTower3) {
+    console.log(`checkWinner: You've won!`);
+  } else console.log(`checkWinner: Not yet!`);
 };
 
 // player submits a move
@@ -143,7 +150,13 @@ moveButton.addEventListener("click", function (event) {
   // validate the move
   validateMove(fromTowerNumber, toTowerNumber);
   // check to see if game is won
-  checkWinner();
+  // get gameInstance arrays
+  let tower2 = gameInstance[1];
+  let tower3 = gameInstance[2];
+  // get winning array
+  let winningTower = [5, 4, 3, 2, 1];
+  checkWinner(tower2, winningTower);
+  checkWinner(tower3, winningTower);
 });
 
 // //////////////////////////////////////////////////////////////////////////////
