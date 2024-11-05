@@ -1,7 +1,7 @@
 // Grab HTML elements
 const fromTower = document.querySelector(".fromTower");
 const toTower = document.querySelector(".toTower");
-const moveButton = document.querySelector(".moveButton");
+const moveButton = document.querySelector("#moveButton");
 
 const tower1 = document.querySelector(".tower1");
 const tower2 = document.querySelector(".tower2");
@@ -19,7 +19,6 @@ const disks = [
 
 const startingBoard = [[5, 4, 3, 2, 1], [], []];
 
-
 let board = {
   tower1: [5, 4, 3, 2, 1],
   tower2: [],
@@ -35,7 +34,6 @@ const tower1Array = board[Object.keys(board)[0]];
 
 // add tower1 array values onto disk
 document.addEventListener("DOMContentLoaded", () => {
-
   // Reverse the order of the disks array
   const reversedDisks = disks.reverse();
 
@@ -51,82 +49,161 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// console.log(`starting game board:`, startingBoard);
-// console.log(`Tower 1's last element:`, tower1Array[tower1Array.length - 1])
-// console.log(`The tower 1 array, hardcoded:`, board[Object.keys(board)[0]])
-
-
 // check if move is valid:
 const validateMove = function (fromTower, toTower) {
+  console.log(
+    `Validating move... the from Tower is ${fromTower} and the toTower is ${toTower}`
+  );
+
   // Get fromTower array
   const fromTowerIndex = fromTower - 1;
-  console.log(`The from tower index:`, fromTowerIndex)
-  console.log(`Validating move... the from Tower is ${fromTower} and the toTower is ${toTower}`);
-  const fromTowerArray = gameInstance[fromTowerIndex];
+  console.log(`The from tower index:`, fromTowerIndex);
+  let fromTowerArray = gameInstance[fromTowerIndex];
   console.log(`From tower array:`, fromTowerArray);
+  console.log(typeof fromTowerArray);
+
   // Get toTower Array
   const toTowerIndex = toTower - 1;
   console.log(`The to Tower index:`, toTowerIndex);
   const toTowerArray = gameInstance[toTowerIndex];
   console.log(`The to Tower Array:`, toTowerArray);
-  const fromTowerLength = fromTowerArray.length; 
+
+  const fromTowerLength = fromTowerArray.length;
   console.log(`from Tower length:`, fromTowerLength);
-  if (fromTowerLength === 0) {
-    console.log(`There are no disks tower ${fromTower}, try again.  Choose a tower with disks.`)
-  } else if (fromTowerIndex == fromTower - 1) {
+  const toTowerLength = toTowerArray.length;
+  console.log(`to Tower length:`, toTowerLength);
+
+  // get disk to move
+  const diskToMove = fromTowerArray[fromTowerLength - 1];
+  console.log(`The disk to move:`, diskToMove);
+
+  // get top disc on target tower
+  const topDiscOnTarget = toTowerArray[toTowerLength - 1];
+  console.log(`The top disc on the target tower:`, topDiscOnTarget);
+
+  // check if fromTower or toTower is undefined
+  if (fromTowerArray === undefined || toTowerArray === undefined) {
+    if (fromTowerArray === undefined) {
+      console.log(
+        `There is no tower ${fromTower}, try again.  Choose tower 1, 2, or 3.`
+      );
+      return false;
+    } else {
+      console.log(
+        `There is no tower ${toTower}, try again.  Choose tower 1, 2, or 3.`
+      );
+      return false;
+    }
+  } // check if fromTower is empty
+  else if (fromTowerArray.length === 0) {
+    console.log(
+      `There are no disks in tower ${fromTower}, try again.  Choose a tower with disks.`
+    );
+    return false;
+  } // check if disk to move is larger than top disc on target tower
+  else if (diskToMove > topDiscOnTarget) {
+    console.log(
+      `The disk to move is larger than the top disc on the target tower. Try again.`
+    );
+    return false;
+  } else {
+    console.log(
+      `You can move disk ${diskToMove} from tower ${fromTower} to tower ${toTower}`
+    );
+
     const popDisk = fromTowerArray.pop();
     console.log(`The moving disk is ${popDisk}`);
     const addDisk = toTowerArray.unshift(popDisk);
+    console.log(`You can move disk`, addDisk);
     console.log(`The board now looks like this:`, gameInstance);
+
+    return true;
   }
-
-
-  // if (fromTowerIndex == fromTower - 1 && fromTowerArray.lenght != 0) {
-  //   console.log(true);
-  //   const popDisk = fromTowerArray.pop();
-  //   console.log(`The popped disk:`, popDisk);
-  //   console.log(fromTowerArray);
-  //   const addDisk = toTowerArray.unshift(popDisk);
-  //   console.log(addDisk);
-  //   console.log(`New to Tower Array:`, toTowerArray);
-  // } else {
-  //   console.log(`This tower is empty, try again.  Choose a tower with disks`);
-  // }
-// 2. check if placing on top of a smaller disc
-
-// if valid, move disc
-// if not valid, display error message
-};
-
-// Move top disk from fromTower to toTower in DOM
-const moveDisk = function (fromTower, toTower) {
-  // const fromTowerArray = gameInstance[fromTower];
-  // console.log(`The from Array:`, fromTowerArray);
-  // console.log(`Move disc from tower ${fromTower} to tower ${toTower}`);
-  validateMove(fromTower, toTower);
 };
 
 // player submits a move
 
-const submitButton = document.querySelector("#moveButton");
-
 // listen for submit button
-submitButton.addEventListener("click", function (event) {
+moveButton.addEventListener("click", function (event) {
   event.preventDefault();
   // get the tower numbers from the inputs
   let fromTower = document.querySelector(".fromTower").value;
-  console.log(fromTower);
+  console.log(`From tower value:`, typeof fromTower, fromTower);
   let toTower = document.querySelector(".toTower").value;
-  console.log(toTower);
-  moveDisk(fromTower, toTower);
-  // return fromTower and toTower values
-  return (fromTower, toTower)
+  console.log(`to tower value:`, typeof toTower, toTower);
+  const fromTowerNumber = Number(fromTower);
+  const toTowerNumber = Number(toTower);
+  validateMove(fromTowerNumber, toTowerNumber);
+  // // return fromTower and toTower values
+  // return (fromTower, toTower)
 });
-
-
 
 // //////////////////////////////////////////////////////////////////////////////
 // *** SANDBOX ***
+// //////////////////////////////////////////////////////////////////////////////
+
+// Move top disk from fromTower to toTower in DOM
+// const moveDisk = function (fromTower, toTower) {
+//   let fromTowerValue = Number(fromTower);
+//   let toTowerValue = Number(toTower);
+//   console.log(`The from tower value is:`, fromTowerValue);
+//   console.log(`The to tower value is:`, toTowerValue);
+//   validateMove(fromTower, toTower);
+// };
+
+// if (fromTowerArray === undefined) {
+//     console.log(`There is no tower ${fromTower}, try again.  Choose tower 1, 2, or 3.`);
+//     return false;
+//   } else if (toTowerArray === undefined) {
+//     console.log(`There is no tower ${fromTower}, try again.  Choose tower 1, 2, or 3.`);
+//   }
+
+//   // check for invalid tower number
+//   const isValidTower = function(number) {
+//     console.log(`The number is:`, number);
+//     console.log([1, 2, 3].includes(Number(number)));
+
+//     return [1, 2, 3].includes(Number(number));
+// };
+
+// isValidTower(fromTowerNumber);
+
+// condiitonal checks
+// check for invalid tower number
+// if (!isValidTower(fromTower) || !isValidTower(toTower)) {
+//   console.log(`Invalid tower number. Please choose a tower number between 1 and 3.`);
+//   // check for empty array
+// } else if (fromTowerLength === 0) {
+//   console.log(`There are no disks tower ${fromTower}, try again.  Choose a tower with disks.`)
+//   // check for disk to move greater than top disc on target tower
+// } else if (diskToMove > topDiscOnTarget) {
+//   console.log(`You can't move disk ${diskToMove} from tower ${fromTower} to tower ${toTower} because it's bigger than the top disc on the target tower.`);
+//   // check if trying to move to the same tower
+// } else if (fromTowerIndex === toTowerIndex) {
+//   console.log(`You can't move to the same tower. Try again.`);
+// } else {
+//   console.log(`You can move disk ${diskToMove} from tower ${fromTower} to tower ${toTower}`)
+//   const popDisk = fromTowerArray.pop();
+//   console.log(`The moving disk is ${popDisk}`);
+//   const addDisk = toTowerArray.unshift(popDisk);
+//     console.log(`You can move disk`, addDisk)
+//     console.log(`The board now looks like this:`, gameInstance);
+// }
+
+// move disk
+// if (fromTowerIndex == fromTower - 1) {
+//   const popDisk = fromTowerArray.pop();
+//   console.log(`The moving disk is ${popDisk}`);
+//   const addDisk = toTowerArray.unshift(popDisk);
+//     console.log(`You can move disk`, addDisk)
+//     console.log(`The board now looks like this:`, gameInstance);
+// }
+
+// console.log(`The first index of the from tower array:`, toTowerArray[0]);
+
+// if valid, move disc
+// if not valid, display error message
+
 // submitButton.addEventListener("click", function (event) {
 //   event.preventDefault();
 //   let fromTower = document.querySelector(".fromTower").value;
