@@ -20,19 +20,19 @@ const disks = [
 // TODO: give ability to add/subtract disks/towers based on user input
 const startingBoard = [[5, 4, 3, 2, 1], [], []];
 
-// use MAP *******
+// get this instance of the game
+let gameInstance = [...startingBoard];
+
+// Per instructions: use array helper .map() to display the board to the console
 const viewBoard = (board) => {
   const boardView = board
     .map((row) => {
       return "--- " + row.join(" ");
     })
-    .join("\n\n");
+    .join("\n");
 
   console.log(boardView);
 };
-
-// get this instance of the game
-let gameInstance = [...startingBoard];
 
 // variable to test reset game:
 // let gameInstance = [[5, 4], [3, 2], [1]];
@@ -59,17 +59,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // check if move is valid:
 const validateMove = function (fromTower, toTower) {
-  console.log(
-    `Validating move... the from Tower is ${fromTower} and the toTower is ${toTower}`
-  );
+  console.log(`Validating move...`);
 
   // Get fromTower array
   const fromTowerIndex = fromTower - 1;
-  let fromTowerArray = gameInstance[fromTowerIndex];
+  const fromTowerArray = gameInstance[fromTowerIndex];
+  console.log(fromTowerArray);
 
   // Get toTower Array
   const toTowerIndex = toTower - 1;
   const toTowerArray = gameInstance[toTowerIndex];
+  console.log(toTowerArray);
+
+  // check if fromTower or toTower is undefined
+  if (fromTowerArray === undefined) {
+    console.log(
+      `There is no tower ${fromTower}, try again.  Choose tower 1, 2, or 3.`
+    );
+    return false;
+  } else if (toTowerArray === undefined) {
+    console.log(
+      `There is no tower ${toTower}, try again.  Choose tower 1, 2, or 3.`
+    );
+    return false;
+  }
 
   const fromTowerLength = fromTowerArray.length;
   const toTowerLength = toTowerArray.length;
@@ -80,21 +93,8 @@ const validateMove = function (fromTower, toTower) {
   // get top disc on target tower
   const topDiscOnTarget = toTowerArray[toTowerLength - 1];
 
-  // check if fromTower or toTower is undefined
-  if (fromTowerArray == undefined || toTowerArray == undefined) {
-    if (fromTowerArray == undefined) {
-      console.log(
-        `There is no tower ${fromTower}, try again.  Choose tower 1, 2, or 3.`
-      );
-      return false;
-    } else {
-      console.log(
-        `There is no tower ${toTower}, try again.  Choose tower 1, 2, or 3.`
-      );
-      return false;
-    }
-  } // check if fromTower is empty
-  else if (fromTowerArray.length === 0) {
+  // check if fromTower is empty
+  if (fromTowerArray.length === 0) {
     console.log(
       `There are no disks in tower ${fromTower}, try again.  Choose a tower with disks.`
     );
@@ -125,7 +125,8 @@ const validateMove = function (fromTower, toTower) {
     // Update game state arrays
     const popDisk = fromTowerArray.pop();
     const addDisk = toTowerArray.push(popDisk);
-    console.log(`The board now looks like this:`, gameInstance);
+    console.log(`The board now looks like this:`);
+    viewBoard(gameInstance);
     return true;
   }
 };
@@ -141,11 +142,11 @@ const resetGame = reset.addEventListener("click", function (event) {
 const checkWinner = function (tower2, tower3) {
   console.log(`Checking for a winner...`);
   const winningTower = JSON.stringify([5, 4, 3, 2, 1]);
-  console.log(`Winning tower JSON:`, winningTower);
+  // console.log(`Winning tower JSON:`, winningTower);
   const tower2Check = JSON.stringify(tower2);
-  console.log(`Tower 2 JSON:`, tower2Check);
+  // console.log(`Tower 2 JSON:`, tower2Check);
   const tower3Check = JSON.stringify(tower3);
-  console.log(`Tower 3 JSON:`, tower3Check);
+  // console.log(`Tower 3 JSON:`, tower3Check);
   if (tower2Check == winningTower || tower3Check === winningTower) {
     console.log(`You won!`);
     gameInstance = [...startingBoard];
@@ -170,10 +171,7 @@ moveButton.addEventListener("click", function (event) {
   const toTowerNumber = Number(toTower);
 
   // validate the move
-  console.log(
-    `Is this move valid?`,
-    validateMove(fromTowerNumber, toTowerNumber)
-  );
+  validateMove(fromTowerNumber, toTowerNumber);
 
   // get gameInstance arrays
   let tower2 = gameInstance[1];

@@ -23,6 +23,7 @@ h1 {
 
 #invalidMoves {
   color: red;
+  margin-bottom: 10px;
 }
 
 .disk {
