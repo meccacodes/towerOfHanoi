@@ -16,6 +16,15 @@ h1 {
   gap: 20px;
 }
 
+#lastValidMove {
+  padding-top: 10px;
+  color: green;
+}
+
+#invalidMoves {
+  color: red;
+}
+
 .disk {
   color: #333;
   border-radius: 25px;

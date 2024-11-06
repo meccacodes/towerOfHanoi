@@ -20,14 +20,25 @@ const disks = [
 // TODO: give ability to add/subtract disks/towers based on user input
 const startingBoard = [[5, 4, 3, 2, 1], [], []];
 
+// use MAP *******
+const viewBoard = (board) => {
+  const boardView = board
+    .map((row) => {
+      return "--- " + row.join(" ");
+    })
+    .join("\n\n");
+
+  console.log(boardView);
+};
+
 // get this instance of the game
 let gameInstance = [...startingBoard];
 
 // variable to test reset game:
 // let gameInstance = [[5, 4], [3, 2], [1]];
 
-console.log(`Starting board instance, this game's instance:`);
-console.log(gameInstance);
+console.log(`The starting board is:`);
+viewBoard(gameInstance);
 
 // add array values onto disks
 document.addEventListener("DOMContentLoaded", () => {
@@ -137,6 +148,7 @@ const checkWinner = function (tower2, tower3) {
   console.log(`Tower 3 JSON:`, tower3Check);
   if (tower2Check == winningTower || tower3Check === winningTower) {
     console.log(`You won!`);
+    gameInstance = [...startingBoard];
     return true;
   } else {
     console.log(`Not yet!`);
@@ -174,9 +186,6 @@ moveButton.addEventListener("click", function (event) {
 // //////////////////////////////////////////////////////////////////////////////
 // *** SANDBOX ***
 // //////////////////////////////////////////////////////////////////////////////
-
-// move disks to tower
-const moveDisk = function () {};
 
 // // Give player ability to add disks and towers
 // // Add new element selections
