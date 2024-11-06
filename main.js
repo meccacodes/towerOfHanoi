@@ -17,34 +17,31 @@ const disks = [
 ];
 
 // A board representing 3 towers, and 5 discs on the first tower in ascending order.
-
+// TODO: give ability to add/subtract disks/towers based on user input
 const startingBoard = [[5, 4, 3, 2, 1], [], []];
 
-// getInnerArrays for this instance of the game
-// let gameInstance = [...startingBoard];
-let gameInstance = [[5, 4], [3, 2], [1]];
+// get this instance of the game
+let gameInstance = [...startingBoard];
+
+// variable to test reset game:
+// let gameInstance = [[5, 4], [3, 2], [1]];
 
 console.log(`Starting board instance, this game's instance:`);
 console.log(gameInstance);
 
 // add array values onto disks
 document.addEventListener("DOMContentLoaded", () => {
-  let board = {
-    tower1: [5, 4, 3, 2, 1],
-    tower2: [],
-    tower3: [],
-  };
-  // Reverse the order of the disks array
-  const reversedDisks = disks.reverse();
+  const board = [...startingBoard];
 
-  reversedDisks.forEach((disk, index) => {
-    if (disk) {
-      const diskValue = board.tower1[index];
-      if (diskValue) {
-        disk.innerHTML = `<span class="diskSpan disk${diskValue}">${diskValue}</span>`;
-      } else {
-        disk.innerHTML = "";
-      }
+  // Get tower1 array from gameInstance
+  const tower1Array = gameInstance[0];
+
+  // Loop through the disks array in reverse (since tower1 displays bottom-up)
+  disks.reverse().forEach((disk, index) => {
+    if (disk && tower1Array[index]) {
+      disk.textContent = tower1Array[index];
+    } else {
+      disk.textContent = "";
     }
   });
 });
@@ -101,6 +98,20 @@ const validateMove = function (fromTower, toTower) {
     console.log(
       `Valid move! You can move disk ${diskToMove} from tower ${fromTower} to tower ${toTower}`
     );
+
+    // Get the tower DOM elements using correct selectors
+    const sourceTower = document.querySelector(`.tower${fromTower}`);
+    const targetTower = document.querySelector(`#tower-${toTower}`);
+
+    // Find the specific disk element to move based on the diskToMove value
+    const diskElement = document.querySelector(`.disk-${diskToMove}`);
+
+    // Add disk to the top of the target tower using prepend
+    if (diskElement && targetTower) {
+      targetTower.prepend(diskElement);
+    }
+
+    // Update game state arrays
     const popDisk = fromTowerArray.pop();
     const addDisk = toTowerArray.push(popDisk);
     console.log(`The board now looks like this:`, gameInstance);
@@ -126,8 +137,11 @@ const checkWinner = function (tower2, tower3) {
   console.log(`Tower 3 JSON:`, tower3Check);
   if (tower2Check == winningTower || tower3Check === winningTower) {
     console.log(`You won!`);
-    resetGame();
-  } else console.log(`Not yet!`);
+    return true;
+  } else {
+    console.log(`Not yet!`);
+    return false;
+  }
 };
 
 // player submits a move
@@ -160,3 +174,67 @@ moveButton.addEventListener("click", function (event) {
 // //////////////////////////////////////////////////////////////////////////////
 // *** SANDBOX ***
 // //////////////////////////////////////////////////////////////////////////////
+
+// move disks to tower
+const moveDisk = function () {};
+
+// // Give player ability to add disks and towers
+// // Add new element selections
+// const towerCountInput = document.querySelector("#towerCount");
+// const gameContainer = document.querySelector(".game-container");
+
+// function generateGame(diskCount, towerCount) {
+//     const newDisks = [];
+//     const newBoard = Array(towerCount).fill().map(() => []);
+
+//     // Generate disks array from largest to smallest
+//     for (let i = diskCount; i > 0; i--) {
+//         const disk = document.createElement('div');
+//         disk.className = `disk disk-${i}`;
+//         disk.textContent = i;
+//         newDisks.push(disk);
+//     }
+
+//     // Set up starting board array - all disks start on first tower
+//     newBoard[0] = Array.from({length: diskCount}, (_, i) => diskCount - i);
+
+//     // Generate tower elements
+//     const towers = [];
+//     for (let i = 1; i <= towerCount; i++) {
+//         const tower = document.createElement('div');
+//         tower.className = `tower tower${i}`;
+//         towers.push(tower);
+//     }
+
+//     return {
+//         disks: newDisks,
+//         board: newBoard,
+//         towers: towers
+//     };
+// }
+
+// updateDiskCount.addEventListener('click', () => {
+//     const diskCount = parseInt(diskCountInput.value);
+//     const towerCount = parseInt(towerCountInput.value);
+
+//     if (diskCount > 0 && diskCount <= 8 && towerCount >= 3 && towerCount <= 8) {
+//         const newSetup = generateGame(diskCount, towerCount);
+
+//         // Update global variables
+//         disks.length = 0;
+//         disks.push(...newSetup.disks);
+//         gameInstance = [...newSetup.board];
+
+//         // Clear and rebuild game container
+//         gameContainer.innerHTML = '';
+//         newSetup.towers.forEach((tower, index) => {
+//             if (index === 0) {
+//                 // Place all disks on first tower
+//                 newSetup.disks.forEach(disk => tower.appendChild(disk));
+//             }
+//             gameContainer.appendChild(tower);
+//         });
+
+//         updateDisksDisplay();
+//     }
+// });
