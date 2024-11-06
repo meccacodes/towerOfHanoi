@@ -9,36 +9,37 @@
   <body>
     <h1>Towers of Hanoi</h1>
     <div class="move-container">
-    <div id="player-move">
+      <div id="player-move">
         <input
           type="text"
           class="fromTower"
           placeholder="Move from this tower..."
         />
         <p>➜</p>
-      <input class="toTower" type="text" placeholder="...to this tower" />
-      <button id="moveButton">Submit</button>
+        <input class="toTower" type="text" placeholder="...to this tower" />
+        <button id="moveButton">Submit</button>
+        <button id="reset">Reset/New Game</button>
+      </div>
     </div>
-  </div>
     <div id="game-container">
       <div id="game-board">
         <div class="tower-container">
-        <div id="tower-1" class="tower">
-          <div class="disk disk-1"></div>
-          <div class="disk disk-2"></div>
-          <div class="disk disk-3"></div>
-          <div class="disk disk-4"></div>
-          <div class="disk disk-5"></div>
-        </div>
-            <h3 class="tower1">1</h3>
+          <div id="tower-1" class="tower">
+            <div class="disk disk-1"></div>
+            <div class="disk disk-2"></div>
+            <div class="disk disk-3"></div>
+            <div class="disk disk-4"></div>
+            <div class="disk disk-5"></div>
+          </div>
+          <h3 class="tower1">1</h3>
         </div>
         <div class="tower-container">
           <div id="tower-2" class="tower"></div>
           <h3 class="tower2">2</h3>
-          </div>
+        </div>
         <div class="tower-container">
-        <div id="tower-3" class="tower"></div>
-            <h3 class="tower3">3</h3>
+          <div id="tower-3" class="tower"></div>
+          <h3 class="tower3">3</h3>
         </div>
       </div>
     </div>

@@ -2,6 +2,7 @@
 const fromTower = document.querySelector(".fromTower");
 const toTower = document.querySelector(".toTower");
 const moveButton = document.querySelector("#moveButton");
+const reset = document.querySelector("#reset");
 
 const tower1 = document.querySelector(".tower1");
 const tower2 = document.querySelector(".tower2");
@@ -19,19 +20,20 @@ const disks = [
 
 const startingBoard = [[5, 4, 3, 2, 1], [], []];
 
-let board = {
-  tower1: [5, 4, 3, 2, 1],
-  tower2: [],
-  tower3: [],
-};
+// getInnerArrays for this instance of the game
+// let gameInstance = [...startingBoard];
+let gameInstance = [[5, 4], [3, 2], [1]];
 
-// getInnerArrays
-const gameInstance = [...startingBoard];
-
-console.log(`Starting board instance, this game's instance:`, gameInstance);
+console.log(`Starting board instance, this game's instance:`);
+console.log(gameInstance);
 
 // add array values onto disks
 document.addEventListener("DOMContentLoaded", () => {
+  let board = {
+    tower1: [5, 4, 3, 2, 1],
+    tower2: [],
+    tower3: [],
+  };
   // Reverse the order of the disks array
   const reversedDisks = disks.reverse();
 
@@ -71,8 +73,8 @@ const validateMove = function (fromTower, toTower) {
   const topDiscOnTarget = toTowerArray[toTowerLength - 1];
 
   // check if fromTower or toTower is undefined
-  if (fromTowerArray === undefined || toTowerArray === undefined) {
-    if (fromTowerArray === undefined) {
+  if (fromTowerArray == undefined || toTowerArray == undefined) {
+    if (fromTowerArray == undefined) {
       console.log(
         `There is no tower ${fromTower}, try again.  Choose tower 1, 2, or 3.`
       );
@@ -106,33 +108,26 @@ const validateMove = function (fromTower, toTower) {
   }
 };
 
-// helper function to compare gameInstance array with winning array
-const isWinningArray = function (gameInstanceArray, winningArray) {
-  let compareArrays =
-    gameInstanceArray.length === winningArray.length &&
-    gameInstanceArray.every(
-      (element, index) => element === winningArray[index]
-    );
-  if (compareArrays) {
-    console.log(`checkWinner... You've won!`);
-  } else console.log("checkWinner... Not yet!");
-  return compareArrays;
-};
+// Listen for Reset/New Game
+const resetGame = reset.addEventListener("click", function (event) {
+  console.log(`Board before reset:`, gameInstance);
+  gameInstance = [...startingBoard];
+  console.log(`The game has been reset, the board is now:`, gameInstance);
+});
 
 // check if the game is won
-const checkWinner = function () {
-  const winningTower = [5, 4, 3, 2, 1];
+const checkWinner = function (tower2, tower3) {
   console.log(`Checking for a winner...`);
-  console.log(`This game's board:`, gameInstance);
-  console.log(`Tower 2:`, gameInstance[1]);
-  console.log(`Tower 3:`, gameInstance[2]);
-  const checkTower2 = isWinningArray(gameInstance[1], winningTower);
-  const checkTower3 = isWinningArray(gameInstance[2], winningTower);
-  console.log(`Tower 2 check:`, checkTower2);
-  console.log(`Tower 3 check:`, checkTower3);
-  if (checkTower2 || checkTower3) {
-    console.log(`checkWinner: You've won!`);
-  } else console.log(`checkWinner: Not yet!`);
+  const winningTower = JSON.stringify([5, 4, 3, 2, 1]);
+  console.log(`Winning tower JSON:`, winningTower);
+  const tower2Check = JSON.stringify(tower2);
+  console.log(`Tower 2 JSON:`, tower2Check);
+  const tower3Check = JSON.stringify(tower3);
+  console.log(`Tower 3 JSON:`, tower3Check);
+  if (tower2Check == winningTower || tower3Check === winningTower) {
+    console.log(`You won!`);
+    resetGame();
+  } else console.log(`Not yet!`);
 };
 
 // player submits a move
@@ -140,23 +135,26 @@ const checkWinner = function () {
 // listen for submit button
 moveButton.addEventListener("click", function (event) {
   event.preventDefault();
-  // get the tower numbers from the inputs
+  // get the tower numbers from player input
   let fromTower = document.querySelector(".fromTower").value;
-  console.log(`From tower value:`, typeof fromTower, fromTower);
+
   let toTower = document.querySelector(".toTower").value;
-  console.log(`to tower value:`, typeof toTower, toTower);
+
   const fromTowerNumber = Number(fromTower);
   const toTowerNumber = Number(toTower);
+
   // validate the move
-  validateMove(fromTowerNumber, toTowerNumber);
-  // check to see if game is won
+  console.log(
+    `Is this move valid?`,
+    validateMove(fromTowerNumber, toTowerNumber)
+  );
+
   // get gameInstance arrays
   let tower2 = gameInstance[1];
   let tower3 = gameInstance[2];
-  // get winning array
-  let winningTower = [5, 4, 3, 2, 1];
-  checkWinner(tower2, winningTower);
-  checkWinner(tower3, winningTower);
+
+  // check to see if game is won
+  checkWinner(tower2, tower3);
 });
 
 // //////////////////////////////////////////////////////////////////////////////
