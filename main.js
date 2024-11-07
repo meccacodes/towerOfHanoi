@@ -45,9 +45,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const board = [...startingBoard];
 
   // Get tower1 array from gameInstance
-  const tower1Array = gameInstance[0];
+  const tower1Array = board[0];
 
-  // Loop through the disks array in reverse (since tower1 displays bottom-up)
+  // // Loop through the disks array in reverse (since tower1 displays bottom-up)
   disks.reverse().forEach((disk, index) => {
     if (disk && tower1Array[index]) {
       disk.textContent = tower1Array[index];
@@ -136,6 +136,7 @@ const resetGame = reset.addEventListener("click", function (event) {
   console.log(`Board before reset:`, gameInstance);
   gameInstance = [...startingBoard];
   console.log(`The game has been reset, the board is now:`, gameInstance);
+  location.reload();
 });
 
 // check if the game is won
@@ -150,6 +151,7 @@ const checkWinner = function (tower2, tower3) {
   if (tower2Check == winningTower || tower3Check === winningTower) {
     console.log(`You won!`);
     gameInstance = [...startingBoard];
+    location.reload();
     return true;
   } else {
     console.log(`Not yet!`);
