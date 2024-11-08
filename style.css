@@ -93,5 +93,8 @@ h1 {
 
 .toTower {
   margin-left: 10px;
-  /* margin-right: 10px; */
+}
+
+#game-container {
+  display: none;
 }

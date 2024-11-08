@@ -11,9 +11,9 @@
     <div class="move-container">
       <div id="player-move">
         <input
-          type="text"
-          class="fromTower"
-          placeholder="Move from this tower..."
+        type="text"
+        class="fromTower"
+        placeholder="Move from this tower..."
         />
         <p>➜</p>
         <input class="toTower" type="text" placeholder="...to this tower" />
@@ -41,21 +41,17 @@
         <h3 class="tower3">3</h3>
       </div>
     </div>
-    <div style="padding-top: 40px">Features not yet implemented:</div>
-    <s>
-      <div id="lastValidMove">
-        Valid moves, will show up here: Disk 1 -> Tower 2
-      </div>
-      <br />
-      <div id="invalidMoves">
-        Invalid moves, show up here: You cannot place a larger disk on top of a
-        small disk!
-      </div>
-    </s>
+    <div id="lastValidMove">
+    </div>
+    <br />
+    <div id="invalidMoves">
+    </div>
     <div id="game-container">
+      <div style="padding-top: 40px">Features not yet implemented:</div>
       <div class="controls">
         <s>
           <div>
+            <p>Change number of towers and disks</p>
             <label for="diskCount">Number of Disks:</label>
             <input
               type="number"
